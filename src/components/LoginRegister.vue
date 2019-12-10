@@ -1,7 +1,7 @@
 <template>
   <div align="center">
     <div v-if="loggedIn">
-      <span class="headline">Logged in as {{this.loggedInUserName}} </span>
+      <span class="headline">Logged in as {{this.loggedInUserName}}</span>
       <v-btn class="mr-4" @click="logOut">Logout</v-btn>
       <Search :loggedInUserName="this.loggedInUserName" />
     </div>
@@ -33,6 +33,16 @@
                   v-model="password_register"
                   type="'password'"
                   label="Password"
+                  required
+                ></v-text-field>
+                <v-text-field clearable dense filled outlined v-model="age" label="Age" required></v-text-field>
+                <v-text-field
+                  clearable
+                  dense
+                  filled
+                  outlined
+                  v-model="favoriteAlbum"
+                  label="Favorite Album"
                   required
                 ></v-text-field>
               </v-container>
@@ -87,6 +97,7 @@
 import { createAccount } from "../api/account/Account";
 import { login } from "../api/account/Account";
 import { getStatus } from "../api/account/Account";
+import { addUserInfo } from "../api/account/User";
 import { setToken } from "../config/Token";
 import Search from "@/components/Search.vue";
 
@@ -103,7 +114,9 @@ export default {
     password_login: "",
     error: "",
     loggedIn: false,
-    loggedInUserName: ""
+    loggedInUserName: "",
+    favoriteAlbum: "",
+    age: ""
   }),
   methods: {
     async registerAccount() {
@@ -116,7 +129,8 @@ export default {
         (this.loggedInUserName = this.name_register),
         await login(namePass).then(
           (this.loggedIn = true),
-          (this.loggedInUserName = this.name_register)
+          (this.loggedInUserName = this.name_register),
+          await addUserInfo({ age: this.age, favAlbum: this.favoriteAlbum })
         )
       );
     },
@@ -126,13 +140,12 @@ export default {
         pass: this.password_login
       };
       if (await login(namePass)) {
-          window.console.log('logged in'),
+        window.console.log("logged in"),
           (this.loggedIn = true),
-          (this.loggedInUserName = this.name_login)
-        } else {
-          window.console.log('failed')
-        }
-
+          (this.loggedInUserName = this.name_login);
+      } else {
+        window.console.log("failed");
+      }
 
       // await login(namePass).then(
       //   window.console.log(res),
