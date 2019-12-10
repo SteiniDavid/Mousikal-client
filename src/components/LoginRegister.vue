@@ -1,9 +1,10 @@
 <template>
   <div align='center'>
     <div v-if="loggedIn">
-        Logged in as {{this.loggedInUserName}}
-        <Search/>
+        <span>Logged in as </span> {{this.loggedInUserName}}
+
         <v-btn class="mr-4" @click="logOut">Logout</v-btn>
+        <Search :loggedInUserName="this.loggedInUserName"/>
     </div>
 
     <div class="LoginRegistration" v-if="!loggedIn">
@@ -62,9 +63,6 @@ export default {
   components: {
     Search,
   },
-
-
-
   data: () => ({
     name_register: "",
     password_register: "",

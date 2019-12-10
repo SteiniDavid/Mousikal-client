@@ -86,9 +86,9 @@ export default {
     commentsPackage: []
   },
   data: () => ({
-    userName: "Steini",
+    userName: "",
     comment: "",
-    albumID: "776Uo845nYHJpNaStv1Ds4",
+    albumID: "",
     albumComments: []
   }),
   methods: {

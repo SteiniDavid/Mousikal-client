@@ -14,7 +14,7 @@
       </div>
     </div>
     <div v-if="artistClickedOn">
-      <ArtistPage :artistID="this.artistID" contain></ArtistPage>
+      <ArtistPage :artistID="this.artistID" :loggedInUserName="this.loggedInUserName" contain></ArtistPage>
     </div>
 
     <!-- <v-btn v-on:click='getTracks()'> Get Tracks</v-btn> -->
@@ -33,6 +33,9 @@ import {
 export default {
   components: {
     ArtistPage
+  },
+  props: {
+    loggedInUserName: String
   },
   data: () => ({
     searchResults: [],

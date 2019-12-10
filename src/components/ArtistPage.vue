@@ -56,7 +56,8 @@ export default {
     Comments
   },
   props: {
-    artistID: String
+    artistID: String,
+    loggedInUserName: String
   },
   data: () => ({
     artist: "",
@@ -78,7 +79,7 @@ export default {
     },
     albumClicked(albumID) {
       this.albumClickedOn = true;
-      this.commentsPackage = [albumID, this.artist, 'Takoda'];
+      this.commentsPackage = [albumID, this.artist, this.loggedInUserName];
     }
   },
   async mounted() {
