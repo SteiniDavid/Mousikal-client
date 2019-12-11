@@ -29,8 +29,8 @@ export const createLike = async ({ user = '', artistID = '', albumID = '', liked
 };
 
 //Delete a comment
-export const updateLikes = async ({likes ='', albumID = ''}) => {
-    return (await axios.post('/'+albumID, {
+export const updateLikes = async ({likes ='', artistID = ''}) => {
+    return (await axios.post('/'+artistID, {
       data: likes
     })).data.result.posted;
   };
