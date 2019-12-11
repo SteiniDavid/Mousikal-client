@@ -215,6 +215,7 @@ export default {
         comment => comment.date == date
       );
       this.albumComments[commentIndex].edit = true;
+      //alert("got here");
       this.albumComments[commentIndex].editVersion = this.albumComments[
         commentIndex
       ].commentBody;
