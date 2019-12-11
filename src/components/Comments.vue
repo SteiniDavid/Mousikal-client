@@ -127,12 +127,12 @@ export default {
     albumURL: String,
     albumName: String,
     tracks: [],
-    artistName: String
+    artistName: String,
+    albumID: String
   },
   data: () => ({
     userName: "",
     comment: "",
-    albumID: "",
     albumComments: [],
     tracksRequested: false
   }),
@@ -250,6 +250,7 @@ export default {
   },
   mounted() {
     this.fetchAlbumComments();
+    this.userName = this.loggedInUserName;
   }
 };
 </script>

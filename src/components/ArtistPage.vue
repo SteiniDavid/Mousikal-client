@@ -44,6 +44,7 @@
         :albumName="clickedOnInfo[1]"
         :tracks="this.tracks"
         :artistName="this.artist"
+        :albumID="clickedOnInfo[2]"
       ></Comments>
     </div>
   </div>
@@ -99,6 +100,7 @@ export default {
       this.getAlbumData(albumID);
       this.clickedOnInfo[0] = imageURL;
       this.clickedOnInfo[1] = albumName;
+      this.clickedOnInfo[2] = albumID;
     },
     // albumLiked(id) {
     //   //return true if album liked by user, else return false
