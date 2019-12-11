@@ -138,9 +138,6 @@ export default {
       }
       return false;
     },
-    // unlikeAlbum(id) {
-
-    // }
     async getAllLikesOfAlbum(id) {
       this.albumLikes = await getLikes({ artistID: id });
       //window.console.log(likes)
