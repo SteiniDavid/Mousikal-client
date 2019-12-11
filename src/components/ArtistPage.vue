@@ -58,7 +58,7 @@ import { getAlbumTracks } from "../api/spotify/spotify";
 
 import { getLikes } from "../api/private/private";
 import { createLike } from "../api/private/private";
-//import { updateLikes } from "../api/private/private";
+import { updateLikes } from "../api/private/private";
 
 export default {
   components: {
@@ -143,7 +143,16 @@ export default {
       //window.console.log(likes)
     },
     async unlikeAlbum(albumID) {
-      return albumID;
+      for (var i = 0; i < this.albumLikes.length; i++) {
+        if (
+          albumID == this.albumLikes[i].albumID &&
+          this.loggedInUserName == this.albumLikes[i].user &&
+          this.albumLikes[i].liked == "true"
+        ) {
+          this.albumLikes.splice( i, 1 );
+        }
+      }
+      await updateLikes({likes: this.albumLikes, artistID: this.artistID});
     }
   },
   async mounted() {

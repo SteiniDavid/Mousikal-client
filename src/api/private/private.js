@@ -6,12 +6,12 @@ const axios = getAxiosInstance('/private/likes');
 //Get all likes for a certain album
 export const getLikes = async ({ artistID = '' }) => {
     try {
-        let likes = await axios.get('');
+        let likes = await axios.get('/'+artistID);
         //alert('reaches')
         //alert(comments.data.result[1].user)
         //console.log(result.data.result);
         likes = likes.data.result;
-        likes = likes.filter(like => like.artistID == artistID);
+        //likes = likes.filter(like => like.artistID == artistID);
         return likes;
     } catch (e) {
         return 0;
@@ -20,7 +20,7 @@ export const getLikes = async ({ artistID = '' }) => {
 
 //Make a like
 export const createLike = async ({ user = '', artistID = '', albumID = '', liked = "true" }) => {
-    return (await axios.post('', {
+    return (await axios.post('/'+artistID, {
         data: {
             artistID, albumID, user, liked
         },
@@ -28,9 +28,9 @@ export const createLike = async ({ user = '', artistID = '', albumID = '', liked
     })).data.result.posted;
 };
 
-//Delete a like
-// export const updateLikes = async ({ user = '', albumID = '' }) => {
-//     return (await axios.post('', {
-//         data: likes
-//     })).data.result.posted;
-// };
+//Delete a comment
+export const updateLikes = async ({likes ='', artistID = ''}) => {
+    return (await axios.post('/'+artistID, {
+      data: likes
+    })).data.result.posted;
+  };
