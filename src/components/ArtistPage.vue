@@ -78,7 +78,7 @@ export default {
       //other data to show would be cool.
       let result = await getAlbumTracks(albumID);
       for (var i = 0; i < result.length; i++) {
-        this.tracks[i] = result[i].name;
+        this.tracks[i] = result[i];
       }
     },
     albumClicked(albumID, imageURL, albumName) {
