@@ -2,6 +2,11 @@
   <v-container>
     <v-layout text-center wrap justify-center>
       <v-flex xs6 mb-5>
+
+        <v-row v-for="track in tracks" :key='track.name'>
+          <h4> {{track}}</h4>
+        </v-row>
+
         <h2 class="headline font-weight-bold mb-3">Make a comment</h2>
         <v-layout justify-center>
           <v-textarea outlined name="comment-box" label="Make a comment" value v-model="comment"></v-textarea>
@@ -16,28 +21,11 @@
             <span class="title font-weight-light">Comment</span>
           </v-card-title>
 
-          <v-card-text
-            class="headline font-weight-bold"
-            v-if="comment.edit!=true"
-          >{{comment.commentBody}}</v-card-text>
+          <v-card-text class="headline font-weight-bold" v-if="comment.edit!=true">{{comment.commentBody}}</v-card-text>
           <div v-else>
-            <v-textarea
-              outlined
-              name="comment-box"
-              label="Make a comment"
-              value
-              v-model="comment.editVersion"
-            ></v-textarea>
-            <v-btn
-              class="white--text"
-              color="deep-purple accent-4"
-              @click="submitEdit(comment.date)"
-            >Submit</v-btn>
-            <v-btn
-              class="white--text"
-              color="deep-purple accent-4"
-              @click="cancelEdit(comment.date)"
-            >Cancel</v-btn>
+            <v-textarea outlined name="comment-box" label="Make a comment" value v-model="comment.editVersion"></v-textarea>
+            <v-btn class="white--text" color="deep-purple accent-4" @click="submitEdit(comment.date)" >Submit</v-btn>
+            <v-btn class="white--text" color="deep-purple accent-4" @click="cancelEdit(comment.date)">Cancel</v-btn>
           </div>
 
           <v-card-actions>
@@ -54,16 +42,8 @@
               </v-list-item-content>
 
               <v-row align="center" justify="end" v-if="comment.user == userName">
-                <v-icon
-                  class="mr-1"
-                  @click="editComment(comment.date)"
-                  v-if="comment.edit!=true"
-                >mdi-pencil</v-icon>
-                <span
-                  class="subheading mr-2"
-                  @click="editComment(comment.date)"
-                  v-if="comment.edit!=true"
-                >Edit</span>
+                <v-icon class="mr-1" @click="editComment(comment.date)" v-if="comment.edit!=true">mdi-pencil</v-icon>
+                <span class="subheading mr-2" @click="editComment(comment.date)" v-if="comment.edit!=true">Edit</span>
                 <span class="mr-1"></span>
                 <v-icon class="mr-1" @click="deleteComment(comment.date)">mdi-delete</v-icon>
                 <span class="subheading" @click="deleteComment(comment.date)">Delete</span>
@@ -80,6 +60,8 @@
 import { createComment } from "../api/comment/Comment";
 import { getAlbumComments } from "../api/comment/Comment";
 import { updateComments } from "../api/comment/Comment";
+import { getAlbumTracks } from "../api/spotify/spotify";
+// import axios from 'axios';
 
 export default {
   props: {
@@ -89,7 +71,8 @@ export default {
     userName: "",
     comment: "",
     albumID: "",
-    albumComments: []
+    albumComments: [],
+    tracks: [],
   }),
   methods: {
     async submitComment() {
@@ -184,10 +167,15 @@ export default {
       //This is where the api request to get the info of a given album is made. 
       //This should set and create the tracklist array and the album cover, maybe some
       //other data to show would be cool. 
+      let result = await getAlbumTracks(this.albumID);
+      window.console.log(result);
+      for (var i = 0; i < result.length; i++) {
+        this.tracks[i] = result[i].name;
+      }
     }
   },
   mounted() {
-    //alert("mounted")
+    // alert("mounted")
     this.userName = this.commentsPackage[2];
     this.artistName = this.commentsPackage[1];
     this.albumID = this.commentsPackage[0];

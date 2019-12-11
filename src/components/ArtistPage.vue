@@ -9,31 +9,11 @@
         <v-row dense>
           <v-col v-for="album in artistInfo" :key="album.albumID" :cols="4">
             <v-card v-on:click="albumClicked(album.albumID)">
-              <v-img
-                :src="album.imageURL"
-                class="white--text align-end"
-                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                height="auto"
-                width="auto"
-              ></v-img>
-
+              <v-img :src="album.imageURL" class="white--text align-end" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="auto" width="auto"></v-img>
               <v-card-actions>
                 <v-card-title>
                   <span class="title font-weight-light">{{album.album}}</span>
                 </v-card-title>
-                <!-- <v-spacer></v-spacer> -->
-
-                <!-- <v-btn icon>
-                <v-icon>mdi-heart</v-icon>
-              </v-btn>
-
-              <v-btn icon>
-                <v-icon>mdi-bookmark</v-icon>
-              </v-btn>
-
-              <v-btn icon>
-                <v-icon>mdi-share-variant</v-icon>-->
-                <!-- </v-btn> -->
               </v-card-actions>
             </v-card>
           </v-col>
