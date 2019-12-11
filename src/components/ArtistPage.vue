@@ -137,22 +137,6 @@ export default {
         }
       }
       return false;
-
-      // this.albumLikes.forEach(like => {
-      //   if (
-      //     albumID == like.albumID &&
-      //     this.loggedInUserName == like.user &&
-      //     like.liked == "true"
-      //   ) {
-      //     window.console.log("album liked");
-      //     verdict = true;
-      //   } else {
-      //     window.console.log("album not liked");
-      //     verdict = false;
-      //   }
-      // });
-
-      // return verdict;
     },
     // unlikeAlbum(id) {
 
