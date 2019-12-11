@@ -31,6 +31,8 @@ import Comments from "@/components/Comments.vue";
 
 import _ from "lodash";
 import { getArtistAlbums } from "../api/spotify/spotify";
+import { getAlbumTracks } from "../api/spotify/spotify";
+
 export default {
   components: {
     Comments
@@ -57,9 +59,22 @@ export default {
       this.artistInfo = _.uniqBy(this.artistInfo, "imageURL");
       this.artistInfo = _.uniqBy(this.artistInfo, "album");
     },
-    albumClicked(albumID) {
+    async getAlbumData(albumID) {
+      //This is where the api request to get the info of a given album is made. 
+      //This should set and create the tracklist array and the album cover, maybe some
+      //other data to show would be cool. 
+      let result = await getAlbumTracks(albumID);
+      var tracks = [];
+      window.console.log(result);
+      for (var i = 0; i < result.length; i++) {
+        tracks[i] = result[i].name;
+      }
+      return tracks;
+    },
+    async albumClicked(albumID) {
       this.albumClickedOn = true;
-      this.commentsPackage = [albumID, this.artist, this.loggedInUserName];
+      var tracks = await this.getAlbumData(albumID);
+      this.commentsPackage = [albumID, this.artist, this.loggedInUserName, tracks];
     }
   },
   async mounted() {
