@@ -8,7 +8,7 @@
       <div v-for="result in searchResults" :key="result.id">
         <v-list-item two-line v-on:click="artistClicked(result.artistID)">
           <v-list-item-title>{{result.name}}</v-list-item-title>
-        <v-img :src='result.imageURL' max-height=75 max-width=75></v-img>
+        <v-img :src='(result.imageURL != null) ? result.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPq_uNbIZWifDjx7OwmUf10m2QcSAIjWByP7UkburP3vNnJ4_8&s"' max-height=75 max-width=75></v-img>
         </v-list-item>
         <br>
       </div>
@@ -44,7 +44,7 @@ export default {
   }),
   methods: {
     update: _.debounce(async function(e) {
-      if (typeof e !== "undefined" && e != "undefined") {
+      if (typeof e !== "undefined" && e != "undefined" && e != null) {
         var r = await getArtist(e);
         this.searchResults = r;
         window.console.log(r);
