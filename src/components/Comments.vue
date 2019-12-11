@@ -2,15 +2,36 @@
   <v-container>
     <v-row>
       <v-col>
-        <v-img :src="this.albumURL" contain max-height="500" max-width="500"></v-img>
+        <v-img
+          v-on:click="playSound()"
+          :src="this.albumURL"
+          contain
+          max-height="500"
+          max-width="500"
+        ></v-img>
+        <br />
         <v-layout justify-center>
-          <v-subheader class="headline font-weight-bold">{{this.artistName}} - <span class="font-weight-light"> {{this.albumName}}</span></v-subheader>
+          <v-subheader class="headline font-weight-bold">{{this.artistName}}</v-subheader>
         </v-layout>
       </v-col>
     </v-row>
 
+    <v-layout justify-center>
+      <v-subheader class="font-weight-light">{{this.albumName}}</v-subheader>
+    </v-layout>
+<v-layout justify-center>
+    <br />
+ </v-layout>
+    <v-btn v-on:click="getTracks()">Get tracks</v-btn>
+    <br />
 
-    <div id="trackList"></div>
+    <v-list v-if="tracksRequested">
+      <v-list-item v-for="track in tracks" :key="track.number">
+        <v-list-item-title>{{track.name}}</v-list-item-title>
+      </v-list-item>
+    </v-list>
+    <!-- 
+    <v-list id="trackList"></v-list>-->
 
     <v-layout text-center wrap justify-center>
       <v-flex xs6 mb-5>
@@ -94,9 +115,6 @@
 import { createComment } from "../api/comment/Comment";
 import { getAlbumComments } from "../api/comment/Comment";
 import { updateComments } from "../api/comment/Comment";
-// import { Vue} from "vue";
-
-// import axios from 'axios';
 
 export default {
   props: {
@@ -110,7 +128,8 @@ export default {
     userName: "",
     comment: "",
     albumID: "",
-    albumComments: []
+    albumComments: [],
+    tracksRequested: false
   }),
   methods: {
     async submitComment() {
@@ -127,19 +146,24 @@ export default {
       });
       this.comment = "";
       return comments;
-      //console.log(comments);
+    },
+    getTracks() {
+      this.tracksRequested = true;
+    },
+    playSound() {
+      var audio = new Audio(this.tracks[0].sampleURL);
+      audio.play();
     },
     requestTracks() {
       var r = document.getElementById("trackList");
       for (var i = 0; i < this.tracks.length; i++) {
         r.innerHTML +=
-          "<v-subheader><span style='float:left;'>" +
+          "<h4 onclick=this.test()><span style='float:left;'>" +
           this.tracks[i].name +
           "</span><span style='float:right;'>" +
           this.millisToMinutesAndSeconds(this.tracks[i].duration) +
-          "</span></v-subheader><br>";
+          "</span></h4><br>";
       }
-      r.innerHTML += "<br>";
     },
     async fetchAlbumComments() {
       let comments = await getAlbumComments({ albumID: this.albumID });
@@ -155,6 +179,7 @@ export default {
           editVersion: ""
         });
       });
+      this.loaded = true;
 
       return comments;
     },
