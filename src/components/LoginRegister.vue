@@ -88,6 +88,10 @@
             </v-card>
           </v-row>
         </v-layout>
+        <br>
+        <v-alert type='error' v-if="loggedInError">
+          Error logging in
+        </v-alert>
       </v-container>
     </div>
   </div>
@@ -116,7 +120,8 @@ export default {
     loggedIn: false,
     loggedInUserName: "",
     favoriteAlbum: "",
-    age: ""
+    age: "",
+    loggedInError: false
   }),
   methods: {
     async registerAccount() {
@@ -140,18 +145,15 @@ export default {
         pass: this.password_login
       };
       if (await login(namePass)) {
-        window.console.log("logged in"),
-          (this.loggedIn = true),
-          (this.loggedInUserName = this.name_login);
+        window.console.log("logged in");
+        this.loggedIn = true;
+        this.loggedInUserName = this.name_login;
+        this.loggedInError = false;
       } else {
         window.console.log("failed");
+        this.loggedInError = true;
       }
 
-      // await login(namePass).then(
-      //   window.console.log(res),
-      //   (this.loggedIn = true),
-      //   (this.loggedInUserName = this.name_login)
-      // );
     },
     async logOut() {
       setToken("");
