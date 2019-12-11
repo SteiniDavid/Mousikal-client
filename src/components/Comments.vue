@@ -19,17 +19,22 @@
     <v-layout justify-center>
       <v-subheader class="font-weight-light">{{this.albumName}}</v-subheader>
     </v-layout>
-<v-layout justify-center>
-    <br />
- </v-layout>
+
+    <v-layout justify-center>
+      <br />
+    </v-layout>
     <v-btn v-on:click="getTracks()">Get tracks</v-btn>
     <br />
 
+<v-layout justify-center>
     <v-list v-if="tracksRequested">
       <v-list-item v-for="track in tracks" :key="track.number">
-        <v-list-item-title>{{track.name}}</v-list-item-title>
+        <v-card min-width=" 600">
+          <v-card-text>{{track.name}}<span style="float:right;">{{millisToMinutesAndSeconds(track.duration)}}</span></v-card-text>
+            </v-card>
       </v-list-item>
     </v-list>
+    </v-layout>
     <!-- 
     <v-list id="trackList"></v-list>-->
 
