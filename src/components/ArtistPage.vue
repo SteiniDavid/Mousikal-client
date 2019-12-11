@@ -26,6 +26,7 @@
         </v-row>
       </v-container>
     </div>
+    <br>
     <div v-if="albumClickedOn">
       <Comments
         :loggedInUserName="this.loggedInUserName"
@@ -59,7 +60,7 @@ export default {
     albumClickedOn: false,
     clickedAlbumID: "",
     clickedOnInfo: [],
-    tracks: []
+    tracks: [],
   }),
   methods: {
     async getArtistInfo(id) {
