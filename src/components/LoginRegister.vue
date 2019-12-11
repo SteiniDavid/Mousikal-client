@@ -30,7 +30,7 @@
                   filled
                   outlined
                   v-model="password_register"
-                  type="'password'"
+                  :type="'password'"
                   label="Password"
                   required
                 ></v-text-field>
@@ -135,7 +135,9 @@ export default {
         await login(namePass).then(
           (this.loggedIn = true),
           (this.loggedInUserName = this.name_register),
-          await addUserInfo({ age: this.age, favAlbum: this.favoriteAlbum })
+          await addUserInfo({ age: this.age, favAlbum: this.favoriteAlbum }).then(
+            window.console.log("manged to add user info, hopefully")
+          )
         )
       );
     },
