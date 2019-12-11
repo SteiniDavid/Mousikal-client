@@ -2,7 +2,7 @@
   <v-container>
     <v-layout text-center wrap justify-center>
       <v-flex xs6 mb-5>
-        <v-row v-for="track in commentsPackage[3]" :key="track.name">
+        <v-row v-for="track in tracks" :key="track.name">
           <h4>{{track}}</h4>
         </v-row>
         <div v-if="loggedInUserName!='Anonymous'">
@@ -90,8 +90,11 @@ import { updateComments } from "../api/comment/Comment";
 
 export default {
   props: {
-    commentsPackage: [],
-    loggedInUserName: String
+    loggedInUserName: String,
+    albumURL: String,
+    albumName: String,
+    tracks: [],
+    artistName: String
   },
   data: () => ({
     userName: "bob",
@@ -193,12 +196,6 @@ export default {
   },
   mounted() {
     window.console.log("using this");
-    this.userName = this.commentsPackage[2];
-    window.console.log(this.userName);
-    this.artistName = this.commentsPackage[1];
-    this.albumID = this.commentsPackage[0];
-    this.tracks = this.commentsPackage[3];
-    this.albumName = this.commentsPackage[4];
     this.fetchAlbumComments();
     //this.showAlbumData();
   }
