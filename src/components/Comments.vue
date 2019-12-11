@@ -1,16 +1,16 @@
 <template>
   <v-container>
-
-     <v-row>
-      <v-col class="md-6">TESTING
-        <v-img src=""></v-img>
-      </v-col>
-      <v-col class="md-2">
-        <v-row v-for="track in tracks" :key="track">
-          <h4>{{track.name}} {{track.duration_ms}}</h4>
-        </v-row>
+    <v-row>
+      <v-col>
+        <v-img :src="this.albumURL" contain max-height="500" max-width="500"></v-img>
+        <v-layout justify-center>
+          <v-subheader class="headline font-weight-bold">{{this.artistName}} - <span class="font-weight-light"> {{this.albumName}}</span></v-subheader>
+        </v-layout>
       </v-col>
     </v-row>
+
+
+    <div id="trackList"></div>
 
     <v-layout text-center wrap justify-center>
       <v-flex xs6 mb-5>
@@ -94,6 +94,7 @@
 import { createComment } from "../api/comment/Comment";
 import { getAlbumComments } from "../api/comment/Comment";
 import { updateComments } from "../api/comment/Comment";
+// import { Vue} from "vue";
 
 // import axios from 'axios';
 
@@ -106,17 +107,13 @@ export default {
     artistName: String
   },
   data: () => ({
-    userName: "bob",
+    userName: "",
     comment: "",
     albumID: "",
-    albumComments: [],
-    tracks: [],
-    albumName: ""
+    albumComments: []
   }),
   methods: {
     async submitComment() {
-      //checking if albumID exists
-      //let result = await axios.get('');
       let comments = await createComment({
         user: this.userName,
         commentBody: this.comment,
@@ -132,10 +129,23 @@ export default {
       return comments;
       //console.log(comments);
     },
+    requestTracks() {
+      var r = document.getElementById("trackList");
+      for (var i = 0; i < this.tracks.length; i++) {
+        r.innerHTML +=
+          "<v-subheader><span style='float:left;'>" +
+          this.tracks[i].name +
+          "</span><span style='float:right;'>" +
+          this.millisToMinutesAndSeconds(this.tracks[i].duration) +
+          "</span></v-subheader><br>";
+      }
+      r.innerHTML += "<br>";
+    },
     async fetchAlbumComments() {
       let comments = await getAlbumComments({ albumID: this.albumID });
       //this.albumComments = comments;
-
+      // this.requestTracks();
+      setTimeout(this.requestTracks, 500);
       this.albumComments = [];
 
       comments.forEach(comment => {
@@ -147,6 +157,11 @@ export default {
       });
 
       return comments;
+    },
+    millisToMinutesAndSeconds(millis) {
+      var minutes = Math.floor(millis / 60000);
+      var seconds = ((millis % 60000) / 1000).toFixed(0);
+      return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
     },
     async deleteComment(date) {
       this.albumComments = this.albumComments.filter(
@@ -204,14 +219,8 @@ export default {
     }
   },
   mounted() {
-    window.console.log("using this");
     this.fetchAlbumComments();
-    //this.showAlbumData();
   }
 };
-
-//Check if json object with albumID exists
-//If it doesnt exist create it
-//Once created push onto it the comment with username, comment, dateCreated
 </script>
 

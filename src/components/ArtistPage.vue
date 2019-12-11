@@ -36,6 +36,7 @@
         </v-row>
       </v-container>
     </div>
+    <br>
     <div v-if="albumClickedOn">
       <Comments
         :loggedInUserName="this.loggedInUserName"
