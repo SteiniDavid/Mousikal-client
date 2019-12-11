@@ -1,10 +1,19 @@
 <template>
   <v-container>
+
+     <v-row>
+      <v-col class="md-6">TESTING
+        <v-img src=""></v-img>
+      </v-col>
+      <v-col class="md-2">
+        <v-row v-for="track in tracks" :key="track">
+          <h4>{{track.name}} {{track.duration_ms}}</h4>
+        </v-row>
+      </v-col>
+    </v-row>
+
     <v-layout text-center wrap justify-center>
       <v-flex xs6 mb-5>
-        <v-row v-for="track in tracks" :key="track.name">
-          <h4>{{track}}</h4>
-        </v-row>
         <div v-if="loggedInUserName!='Anonymous'">
           <h2 class="headline font-weight-bold mb-3">Make a comment</h2>
           <v-layout justify-center>
