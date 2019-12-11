@@ -8,7 +8,7 @@
       <v-container>
         <v-row dense>
           <v-col v-for="album in artistInfo" :key="album.albumID" :cols="4">
-            <v-card v-on:click="albumClicked(album.albumID)">
+            <v-card v-on:click="albumClicked(album.albumID, album.album)">
               <v-img :src="album.imageURL" class="white--text align-end" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="auto" width="auto"></v-img>
               <v-card-actions>
                 <v-card-title>
@@ -21,7 +21,7 @@
       </v-container>
     </div>
     <div v-if="albumClickedOn">
-      <Comments :commentsPackage="this.commentsPackage"></Comments>
+      <Comments :commentsPackage="this.commentsPackage" :loggedInUserName="this.loggedInUserName"></Comments>
     </div>
   </div>
 </template>
@@ -71,10 +71,10 @@ export default {
       }
       return tracks;
     },
-    async albumClicked(albumID) {
+    async albumClicked(albumID, albumName) {
       this.albumClickedOn = true;
       var tracks = await this.getAlbumData(albumID);
-      this.commentsPackage = [albumID, this.artist, this.loggedInUserName, tracks];
+      this.commentsPackage = [albumID, this.artist, this.loggedInUserName, tracks, albumName];
     }
   },
   async mounted() {

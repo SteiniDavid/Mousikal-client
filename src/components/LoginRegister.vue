@@ -3,7 +3,6 @@
     <div v-if="loggedIn">
       <span class="headline">Logged in as {{this.loggedInUserName}}</span>
       <v-btn class="mr-4" @click="logOut">Logout</v-btn>
-      <Search :loggedInUserName="this.loggedInUserName" />
     </div>
 
     <div class="LoginRegistration" v-if="!loggedIn">
@@ -94,6 +93,7 @@
         </v-alert>
       </v-container>
     </div>
+    <Search :loggedInUserName="this.loggedInUserName" />
   </div>
 </template>
 
@@ -167,7 +167,7 @@ export default {
       this.loggedInUserName = res.user.name;
     } catch (err) {
       this.loggedIn = false;
-      this.loggedInUserName = "";
+      this.loggedInUserName = "Anonymous";
     }
   }
 };

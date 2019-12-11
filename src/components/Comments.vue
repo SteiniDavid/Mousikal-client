@@ -2,16 +2,16 @@
   <v-container>
     <v-layout text-center wrap justify-center>
       <v-flex xs6 mb-5>
-        
-        <v-row v-for="track in tracks" :key="track.name">
+        <v-row v-for="track in commentsPackage[3]" :key="track.name">
           <h4>{{track}}</h4>
         </v-row>
-
-        <h2 class="headline font-weight-bold mb-3">Make a comment</h2>
-        <v-layout justify-center>
-          <v-textarea outlined name="comment-box" label="Make a comment" value v-model="comment"></v-textarea>
-        </v-layout>
-        <v-btn class="white--text" color="deep-purple accent-4" @click="submitComment">Submit</v-btn>
+        <div v-if="loggedInUserName!='Anonymous'">
+          <h2 class="headline font-weight-bold mb-3">Make a comment</h2>
+          <v-layout justify-center>
+            <v-textarea outlined name="comment-box" label="Make a comment" value v-model="comment"></v-textarea>
+          </v-layout>
+          <v-btn class="white--text" color="deep-purple accent-4" @click="submitComment">Submit</v-btn>
+        </div>
       </v-flex>
 
       <v-layout justify-center v-for="comment in albumComments" :key="comment.date">
@@ -90,14 +90,16 @@ import { updateComments } from "../api/comment/Comment";
 
 export default {
   props: {
-    commentsPackage: []
+    commentsPackage: [],
+    loggedInUserName: String
   },
   data: () => ({
-    userName: "",
+    userName: "bob",
     comment: "",
     albumID: "",
     albumComments: [],
-    tracks: []
+    tracks: [],
+    albumName: ""
   }),
   methods: {
     async submitComment() {
@@ -190,11 +192,13 @@ export default {
     }
   },
   mounted() {
-    // alert("mounted")
+    window.console.log("using this");
     this.userName = this.commentsPackage[2];
+    window.console.log(this.userName);
     this.artistName = this.commentsPackage[1];
     this.albumID = this.commentsPackage[0];
     this.tracks = this.commentsPackage[3];
+    this.albumName = this.commentsPackage[4];
     this.fetchAlbumComments();
     //this.showAlbumData();
   }
