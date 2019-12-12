@@ -14,14 +14,17 @@
       </div>
     </div>
     <div v-if="artistClickedOn">
-      <ArtistPage :artistID="this.artistID" :loggedInUserName="this.loggedInUserName" contain></ArtistPage>
+      <ArtistPage :artistID="this.artistID" :loggedInUserName="this.loggedInUserName" :favoriteAlbum="this.favoriteAlbum" :age="this.age" :registered="this.registered" contain></ArtistPage>
     </div>
+    <div v-if="registered == true"><btn v-on:click="pushUserInfo">try to register</btn></div>
 
   </v-container>
 </template>
 
 <script>
 import ArtistPage from "@/components/ArtistPage.vue";
+
+import { addUserInfo } from "../api/account/User";
 
 import _ from "lodash";
 import {
@@ -34,7 +37,10 @@ export default {
     ArtistPage
   },
   props: {
-    loggedInUserName: String
+    loggedInUserName: String,
+    favoriteAlbum: String,
+    age: String,
+    registered: Boolean
   },
   data: () => ({
     searchResults: [],
@@ -62,6 +68,22 @@ export default {
     async getTracks() {
       var r = await getAlbumTracks();
       window.console.log(r);
+    },
+    async pushUserInfo() {
+      window.console.log("got to push user info");
+      try {
+        let res = (await addUserInfo({age: this.age, favAlbum: this.favoriteAlbum}));
+        return res;
+      } catch(err) {
+        window.console.log(err)
+      }
+    }
+  },
+  mounted() {
+    if(this.registered == true) {
+      window.location.reload();
+      window.console.log("getting to mounted")
+      this.pushUserInfo();
     }
   }
 };

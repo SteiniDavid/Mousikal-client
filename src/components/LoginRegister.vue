@@ -87,7 +87,7 @@
       </v-container>
     </div>
     <!-- <v-btn class="mr-4" @click="pushUserInfo">register that shit</v-btn> -->
-    <Search :loggedInUserName="this.loggedInUserName" />
+    <Search :loggedInUserName="this.loggedInUserName" :favoriteAlbum="this.favoriteAlbum" :age="this.age" :registered="this.registered"/>
   </div>
 </template>
 
@@ -95,7 +95,6 @@
 import { createAccount } from "../api/account/Account";
 import { login } from "../api/account/Account";
 import { getStatus } from "../api/account/Account";
-import { addUserInfo } from "../api/account/User";
 import { setToken } from "../config/Token";
 import Search from "@/components/Search.vue";
 
@@ -115,7 +114,8 @@ export default {
     loggedInUserName: "",
     favoriteAlbum: "pink moon",
     age: "22",
-    loggedInError: false
+    loggedInError: false,
+    registered: false
   }),
   methods: {
     async registerAccount() {
@@ -126,14 +126,14 @@ export default {
       await createAccount(namePass).then(
         (this.loggedIn = true),
         (this.loggedInUserName = this.name_register),
-        await login(namePass).then( function () {
-          (this.loggedIn = true);
-          (this.loggedInUserName = this.name_register);
-        }
-          // (this.loggedIn = true);
-          // (this.loggedInUserName = this.name_register);
-          // document.getElementById('username');
-        )
+        window.console.log("setting to true"),
+        this.registered = true,
+        // await login(namePass).then( function () {
+        //   (this.loggedIn = true);
+        //   (this.loggedInUserName = this.name_register);
+        //   //window.location.reload();
+        // }
+        //)
       );
     },
     async loginAccount() {
@@ -158,14 +158,6 @@ export default {
     },
     handleBack() {
       window.location.reload();
-    },
-    async pushUserInfo() {
-      try {
-        let res = (await addUserInfo({age: this.age, favAlbum: this.favoriteAlbum}));
-        return res;
-      } catch(err) {
-        window.console.log(err)
-      }
     }
   },
   async created() {

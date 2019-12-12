@@ -61,13 +61,18 @@ import { getLikes } from "../api/private/private";
 import { createLike } from "../api/private/private";
 import { updateLikes } from "../api/private/private";
 
+import { addUserInfo } from "../api/account/User";
+
 export default {
   components: {
     Comments
   },
   props: {
     artistID: String,
-    loggedInUserName: String
+    loggedInUserName: String,
+    favoriteAlbum: String,
+    age: String,
+    registered: Boolean
   },
   data: () => ({
     artist: "",
@@ -76,7 +81,7 @@ export default {
     clickedAlbumID: "",
     clickedOnInfo: [],
     tracks: [],
-    albumLikes: [],
+    albumLikes: []
   }),
   methods: {
     async getArtistInfo(id) {
@@ -166,11 +171,22 @@ export default {
         }
       }
       await updateLikes({ likes: this.albumLikes, artistID: this.artistID });
+    },
+    async pushUserInfo() {
+      window.console.log("got to push user info");
+      try {
+        let res = (await addUserInfo({age: this.age, favAlbum: this.favoriteAlbum}));
+        return res;
+      } catch(err) {
+        window.console.log(err)
+      }
     }
   },
   async mounted() {
     await this.getArtistInfo(this.artistID);
-
+    if(this.registered == true) {
+      this.pushUserInfo()
+    }
     this.getAllLikesOfAlbum(this.artistID);
   }
 };
