@@ -69,10 +69,10 @@ export default {
       var r = await getAlbumTracks();
       window.console.log(r);
     },
-    async pushUserInfo() {
+    async pushUserInfo(age, favAlbum) {
       window.console.log("got to push user info");
       try {
-        let res = (await addUserInfo({age: this.age, favAlbum: this.favoriteAlbum}));
+        let res = (await addUserInfo({age: age, favAlbum: favAlbum}));
         return res;
       } catch(err) {
         window.console.log(err)
@@ -81,12 +81,17 @@ export default {
   },
   mounted() {
     if(localStorage.registered) {
-      let age = localStorage.getItem('age');
       let registered = localStorage.getItem('registered');
-      let favoriteAlbum = localStorage.getItem('favoriteAlbum');
-      window.console.log(age);
-      window.console.log(registered);
-      window.console.log(favoriteAlbum);
+       window.console.log(registered);
+       window.console.log(registered == 'true');
+      if(registered == 'true') {
+        let age = localStorage.getItem('age');
+        let favoriteAlbum = localStorage.getItem('favoriteAlbum');
+        window.console.log(age);
+        window.console.log(favoriteAlbum);
+        this.pushUserInfo(age, favoriteAlbum);
+        localStorage.setItem('registered', 'false')
+      }
     }
     if(this.registered == true) {
       window.location.reload();
