@@ -1,6 +1,9 @@
 <template>
   <v-app>
     <v-app-bar app color="green darken-1" dark>
+      <v-btn id='backButton' style="float:left;" class="ma-2" v-on:click='handleBack' hidden>back
+          <v-icon dark right>mdi-arrow-left</v-icon>
+      </v-btn>
       <v-spacer></v-spacer>
       <v-toolbar-title class="headline">Mousikal</v-toolbar-title>
       <v-spacer></v-spacer>
@@ -25,6 +28,12 @@ export default {
 
   data: () => ({
     //
-  })
+  }),
+
+  methods: {
+    handleBack() {
+      window.location.reload();
+    }
+  }
 };
 </script>

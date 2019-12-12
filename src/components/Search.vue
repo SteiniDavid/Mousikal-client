@@ -57,6 +57,7 @@ export default {
     },
     artistClicked(id) {
       this.artistClickedOn = true;
+      document.getElementById("backButton").hidden = false;
       this.artistID = id;
     },
     async getTracks() {

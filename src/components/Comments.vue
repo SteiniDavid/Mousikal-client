@@ -23,7 +23,7 @@
     <v-layout justify-center>
       <br />
     </v-layout>
-    <v-btn v-on:click="getTracks()" v-on:hover="alert()">Get tracks</v-btn>
+    <v-btn v-on:click="getTracks()" v-on:hover="alert()">Show tracks</v-btn>
     <br />
 
     <v-layout justify-center>
@@ -164,6 +164,7 @@ export default {
       } else {
         var audio = new Audio(this.tracks[0].sampleURL);
         this.playingMusic = true;
+        setTimeout(function() {this.playingMusic = false;}, 300);
         audio.play();
       }
     },
