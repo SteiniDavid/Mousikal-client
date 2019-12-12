@@ -124,10 +124,15 @@ export default {
         pass: this.password_register
       };
       await createAccount(namePass).then(
-        (this.loggedIn = true),
+        //(this.loggedIn = true),
         (this.loggedInUserName = this.name_register),
         window.console.log("setting to true"),
         this.registered = true,
+        //localStorage.registered = this.true,
+        //localStorage.age = this.age
+        localStorage.setItem('age', this.age),
+        localStorage.setItem('registered', this.registered),
+        localStorage.setItem('favoriteAlbum', this.favoriteAlbum)
         // await login(namePass).then( function () {
         //   (this.loggedIn = true);
         //   (this.loggedInUserName = this.name_register);

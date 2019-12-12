@@ -80,6 +80,14 @@ export default {
     }
   },
   mounted() {
+    if(localStorage.registered) {
+      let age = localStorage.getItem('age');
+      let registered = localStorage.getItem('registered');
+      let favoriteAlbum = localStorage.getItem('favoriteAlbum');
+      window.console.log(age);
+      window.console.log(registered);
+      window.console.log(favoriteAlbum);
+    }
     if(this.registered == true) {
       window.location.reload();
       window.console.log("getting to mounted")
