@@ -90,12 +90,11 @@
             </v-card>
           </v-row>
         </v-layout>
-        <br>
-        <v-alert type='error' v-if="loggedInError">
-          Error logging in
-        </v-alert>
+        <br />
+        <v-alert type="error" v-if="loggedInError">Error logging in</v-alert>
       </v-container>
     </div>
+    <v-btn class="mr-4" @click="pushUserInfo">registerthat shit</v-btn>
     <Search :loggedInUserName="this.loggedInUserName" />
   </div>
 </template>
@@ -137,12 +136,7 @@ export default {
         (this.loggedInUserName = this.name_register),
         await login(namePass).then(
           (this.loggedIn = true),
-          (this.loggedInUserName = this.name_register),
-          await addUserInfo({ age: this.age, favAlbum: this.favoriteAlbum }).then(
-            function(result) {
-              window.console.log(result);
-            }
-          )
+          (this.loggedInUserName = this.name_register)
         )
       );
     },
@@ -160,7 +154,6 @@ export default {
         window.console.log("failed");
         this.loggedInError = true;
       }
-
     },
     async logOut() {
       setToken("");
