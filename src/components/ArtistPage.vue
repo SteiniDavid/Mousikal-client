@@ -76,7 +76,7 @@ export default {
     clickedAlbumID: "",
     clickedOnInfo: [],
     tracks: [],
-    albumLikes: []
+    albumLikes: [],
   }),
   methods: {
     async getArtistInfo(id) {

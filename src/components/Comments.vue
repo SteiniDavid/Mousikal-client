@@ -23,7 +23,7 @@
     <v-layout justify-center>
       <br />
     </v-layout>
-    <v-btn v-on:click="getTracks()">Get tracks</v-btn>
+    <v-btn v-on:click="getTracks()" v-on:hover="alert()">Get tracks</v-btn>
     <br />
 
     <v-layout justify-center>
@@ -38,8 +38,7 @@
         </v-list-item>
       </v-list>
     </v-layout>
-    <!-- 
-    <v-list id="trackList"></v-list>-->
+
 
     <v-layout text-center wrap justify-center>
       <v-flex xs6 mb-5>
@@ -137,7 +136,8 @@ export default {
     userName: "",
     comment: "",
     albumComments: [],
-    tracksRequested: false
+    tracksRequested: false,
+    playingMusic: false
   }),
   methods: {
     async submitComment() {
@@ -156,11 +156,16 @@ export default {
       return comments;
     },
     getTracks() {
-      this.tracksRequested = true;
+      this.tracksRequested = !this.tracksRequested;
     },
     playSound() {
-      var audio = new Audio(this.tracks[0].sampleURL);
-      audio.play();
+      if (this.playingMusic) {
+        return false;
+      } else {
+        var audio = new Audio(this.tracks[0].sampleURL);
+        this.playingMusic = true;
+        audio.play();
+      }
     },
     requestTracks() {
       var r = document.getElementById("trackList");
