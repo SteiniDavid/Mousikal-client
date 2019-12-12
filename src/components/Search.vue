@@ -17,7 +17,6 @@
       <ArtistPage :artistID="this.artistID" :loggedInUserName="this.loggedInUserName" contain></ArtistPage>
     </div>
 
-    <!-- <v-btn v-on:click='getTracks()'> Get Tracks</v-btn> -->
   </v-container>
 </template>
 

@@ -1,12 +1,6 @@
 <template>
   <div align="center">
-     <br />
-    <div v-if="loggedIn">
-      <span class="headline">Logged in as {{this.loggedInUserName}}</span>
-      <v-btn style="float:right;" class="mr-4" @click="logOut">Logout</v-btn>
-    </div>
-
-    <br />
+    <br>
 
     <div class="LoginRegistration" v-if="!loggedIn">
       <h1>Registration and Login</h1>

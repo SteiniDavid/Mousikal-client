@@ -7,6 +7,8 @@
       <v-spacer></v-spacer>
       <v-toolbar-title class="headline">Mousikal</v-toolbar-title>
       <v-spacer></v-spacer>
+      <h4 style="float:left;" id='userName' hidden></h4>
+      <v-btn hidden id='logoutButton' style="float:right;" @click="logOut">Logout</v-btn>
     </v-app-bar>
 
     <v-content class="">
@@ -18,6 +20,7 @@
 
 <script>
 import LoginRegister from "./components/LoginRegister";
+import { setToken } from "./config/Token";
 
 export default {
   name: "App",
@@ -33,7 +36,12 @@ export default {
   methods: {
     handleBack() {
       window.location.reload();
-    }
+    },
+    async logOut() {
+      setToken("");
+      window.location.reload();
+      document.getElementById("logoutButton").hidden = true;
+    },
   }
 };
 </script>
