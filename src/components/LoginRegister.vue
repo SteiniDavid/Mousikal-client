@@ -1,6 +1,12 @@
 <template>
   <div align="center">
-    <br>
+    <!-- <br>
+    <div v-if="loggedIn">
+      <span class="headline">Logged in as {{this.loggedInUserName}}</span>
+      <v-btn style="float:right;" class="mr-4" @click="logOut">Logout</v-btn>
+    </div>
+
+    <br> -->
 
     <div class="LoginRegistration" v-if="!loggedIn">
       <h1>Registration and Login</h1>
@@ -97,7 +103,7 @@
 import { createAccount } from "../api/account/Account";
 import { login } from "../api/account/Account";
 import { getStatus } from "../api/account/Account";
-// import { addUserInfo } from "../api/account/User";
+import { addUserInfo } from "../api/account/User";
 import { setToken } from "../config/Token";
 import Search from "@/components/Search.vue";
 
