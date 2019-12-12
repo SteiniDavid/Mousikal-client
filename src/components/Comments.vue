@@ -73,12 +73,12 @@
             <v-btn
               class="white--text"
               color="deep-purple accent-4"
-              @click="submitEdit(comment.date)"
+              v-on:click="submitEdit(comment.date)"
             >Submit</v-btn>
             <v-btn
               class="white--text"
               color="deep-purple accent-4"
-              @click="cancelEdit(comment.date)"
+              v-on:click="cancelEdit(comment.date)"
             >Cancel</v-btn>
           </div>
 
@@ -98,17 +98,17 @@
               <v-row align="center" justify="end" v-if="comment.user == userName">
                 <v-icon
                   class="mr-1"
-                  @click="editComment(comment.date)"
+                  v-on:click.native="editComment(comment.date)"
                   v-if="comment.edit!=true"
                 >mdi-pencil</v-icon>
                 <span
                   class="subheading mr-2"
-                  @click="editComment(comment.date)"
+                  v-on:click="editComment(comment.date)"
                   v-if="comment.edit!=true"
                 >Edit</span>
                 <span class="mr-1"></span>
-                <v-icon class="mr-1" @click="deleteComment(comment.date)">mdi-delete</v-icon>
-                <span class="subheading" @click="deleteComment(comment.date)">Delete</span>
+                <v-icon class="mr-1" v-on:click="deleteComment(comment.date)">mdi-delete</v-icon>
+                <span class="subheading" v-on:click="deleteComment(comment.date)">Delete</span>
               </v-row>
             </v-list-item>
           </v-card-actions>
@@ -149,6 +149,8 @@ export default {
       this.albumComments.unshift({
         user: this.userName,
         commentBody: this.comment,
+        edit: false,
+        editVersion: "",
         albumID: this.albumID,
         date: new Date().getTime()
       });
@@ -228,6 +230,7 @@ export default {
       this.albumComments[commentIndex].editVersion = this.albumComments[
         commentIndex
       ].commentBody;
+      window.console.log("editing")
     },
     cancelEdit(date) {
       var commentIndex = this.albumComments.findIndex(
