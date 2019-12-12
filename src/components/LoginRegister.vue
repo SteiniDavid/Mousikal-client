@@ -112,8 +112,8 @@ export default {
     error: "",
     loggedIn: false,
     loggedInUserName: "",
-    favoriteAlbum: "pink moon",
-    age: "22",
+    favoriteAlbum: "",
+    age: "",
     loggedInError: false,
     registered: false
   }),

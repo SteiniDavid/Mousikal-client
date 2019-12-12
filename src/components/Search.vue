@@ -16,7 +16,6 @@
     <div v-if="artistClickedOn">
       <ArtistPage :artistID="this.artistID" :loggedInUserName="this.loggedInUserName" :favoriteAlbum="this.favoriteAlbum" :age="this.age" :registered="this.registered" contain></ArtistPage>
     </div>
-    <div v-if="registered == true"><btn v-on:click="pushUserInfo">try to register</btn></div>
 
   </v-container>
 </template>
