@@ -1,12 +1,12 @@
 <template>
   <div align="center">
-    <br>
+    <br />
     <div v-if="loggedIn">
       <span class="headline">Logged in as {{this.loggedInUserName}}</span>
       <v-btn style="float:right;" class="mr-4" @click="logOut">Logout</v-btn>
     </div>
 
-    <br>
+    <br />
 
     <div class="LoginRegistration" v-if="!loggedIn">
       <h1>Registration and Login</h1>
@@ -94,7 +94,7 @@
         <v-alert type="error" v-if="loggedInError">Error logging in</v-alert>
       </v-container>
     </div>
-    <v-btn class="mr-4" @click="pushUserInfo">registerthat shit</v-btn>
+    <!-- <v-btn class="mr-4" @click="pushUserInfo">register that shit</v-btn> -->
     <Search :loggedInUserName="this.loggedInUserName" />
   </div>
 </template>
@@ -121,8 +121,8 @@ export default {
     error: "",
     loggedIn: false,
     loggedInUserName: "",
-    favoriteAlbum: "",
-    age: "",
+    favoriteAlbum: "pink moon",
+    age: "22",
     loggedInError: false
   }),
   methods: {
@@ -150,6 +150,7 @@ export default {
         this.loggedIn = true;
         this.loggedInUserName = this.name_login;
         this.loggedInError = false;
+        window.location.reload();
       } else {
         window.console.log("failed");
         this.loggedInError = true;
@@ -161,6 +162,14 @@ export default {
     },
     handleBack() {
       window.location.reload();
+    },
+    async pushUserInfo() {
+      try {
+        let res = (await addUserInfo({age: this.age, favAlbum: this.favoriteAlbum}));
+        return res;
+      } catch(err) {
+        window.console.log(err)
+      }
     }
   },
   async created() {

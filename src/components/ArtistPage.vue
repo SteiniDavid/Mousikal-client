@@ -152,6 +152,7 @@ export default {
         user: "this.loggedInUserName"
       }]
       }
+
       //window.console.log(likes)
     },
     async unlikeAlbum(albumID) {
