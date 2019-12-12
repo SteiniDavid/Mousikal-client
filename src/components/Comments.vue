@@ -26,14 +26,17 @@
     <v-btn v-on:click="getTracks()">Get tracks</v-btn>
     <br />
 
-<v-layout justify-center>
-    <v-list v-if="tracksRequested">
-      <v-list-item v-for="track in tracks" :key="track.number">
-        <v-card min-width=" 600">
-          <v-card-text>{{track.name}}<span style="float:right;">{{millisToMinutesAndSeconds(track.duration)}}</span></v-card-text>
-            </v-card>
-      </v-list-item>
-    </v-list>
+    <v-layout justify-center>
+      <v-list v-if="tracksRequested">
+        <v-list-item v-for="track in tracks" :key="track.number">
+          <v-card min-width=" 600">
+            <v-card-text>
+              {{track.name}}
+              <span style="float:right;">{{millisToMinutesAndSeconds(track.duration)}}</span>
+            </v-card-text>
+          </v-card>
+        </v-list-item>
+      </v-list>
     </v-layout>
     <!-- 
     <v-list id="trackList"></v-list>-->
