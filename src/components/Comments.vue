@@ -50,7 +50,7 @@
           <v-btn class="white--text" color="deep-purple accent-4" @click="submitComment">Submit</v-btn>
         </div>
       </v-flex>
-
+      <v-col cols="12">
       <v-layout justify-center v-for="comment in albumComments" :key="comment.date">
         <v-card class="mx-6 mb-6" color="green" dark max-width="600" min-width="500">
           <v-card-title>
@@ -114,6 +114,7 @@
           </v-card-actions>
         </v-card>
       </v-layout>
+      </v-col>
     </v-layout>
   </v-container>
 </template>
