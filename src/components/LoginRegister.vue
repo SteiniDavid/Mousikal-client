@@ -1,6 +1,6 @@
 <template>
   <div align="center">
-    <br />
+     <br />
     <div v-if="loggedIn">
       <span class="headline">Logged in as {{this.loggedInUserName}}</span>
       <v-btn style="float:right;" class="mr-4" @click="logOut">Logout</v-btn>
@@ -103,7 +103,7 @@
 import { createAccount } from "../api/account/Account";
 import { login } from "../api/account/Account";
 import { getStatus } from "../api/account/Account";
-import { addUserInfo } from "../api/account/User";
+// import { addUserInfo } from "../api/account/User";
 import { setToken } from "../config/Token";
 import Search from "@/components/Search.vue";
 
@@ -134,9 +134,13 @@ export default {
       await createAccount(namePass).then(
         (this.loggedIn = true),
         (this.loggedInUserName = this.name_register),
-        await login(namePass).then(
-          (this.loggedIn = true),
-          (this.loggedInUserName = this.name_register)
+        await login(namePass).then( function () {
+          (this.loggedIn = true);
+          (this.loggedInUserName = this.name_register);
+        }
+          // (this.loggedIn = true);
+          // (this.loggedInUserName = this.name_register);
+          // document.getElementById('username');
         )
       );
     },
@@ -177,6 +181,9 @@ export default {
       let res = await getStatus();
       this.loggedIn = true;
       this.loggedInUserName = res.user.name;
+      document.getElementById('userName').innerHTML = "Logged in as " + this.loggedInUserName;
+      document.getElementById('userName').hidden = false;
+      document.getElementById("logoutButton").hidden = false;
     } catch (err) {
       this.loggedIn = false;
       this.loggedInUserName = "Anonymous";
