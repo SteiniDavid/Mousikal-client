@@ -36,7 +36,7 @@
         </v-row>
       </v-container>
     </div>
-    <br>
+    <br />
     <div v-if="albumClickedOn">
       <Comments
         :loggedInUserName="this.loggedInUserName"
@@ -44,6 +44,7 @@
         :albumName="clickedOnInfo[1]"
         :tracks="this.tracks"
         :artistName="this.artist"
+        :albumID="clickedOnInfo[2]"
       ></Comments>
     </div>
   </div>
@@ -99,6 +100,7 @@ export default {
       this.getAlbumData(albumID);
       this.clickedOnInfo[0] = imageURL;
       this.clickedOnInfo[1] = albumName;
+      this.clickedOnInfo[2] = albumID;
     },
     // albumLiked(id) {
     //   //return true if album liked by user, else return false
@@ -140,6 +142,16 @@ export default {
     },
     async getAllLikesOfAlbum(id) {
       this.albumLikes = await getLikes({ artistID: id });
+      window.console.log("before")
+      window.console.log(this.albumLikes);
+      if(this.albumLikes == 0) {
+        this.albumLikes = [{
+        albumID: 0,
+        artistID: "this.artistID",
+        liked: "true",
+        user: "this.loggedInUserName"
+      }]
+      }
       //window.console.log(likes)
     },
     async unlikeAlbum(albumID) {
@@ -149,10 +161,10 @@ export default {
           this.loggedInUserName == this.albumLikes[i].user &&
           this.albumLikes[i].liked == "true"
         ) {
-          this.albumLikes.splice( i, 1 );
+          this.albumLikes.splice(i, 1);
         }
       }
-      await updateLikes({likes: this.albumLikes, artistID: this.artistID});
+      await updateLikes({ likes: this.albumLikes, artistID: this.artistID });
     }
   },
   async mounted() {

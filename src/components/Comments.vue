@@ -130,12 +130,12 @@ export default {
     albumURL: String,
     albumName: String,
     tracks: [],
-    artistName: String
+    artistName: String,
+    albumID: String
   },
   data: () => ({
     userName: "",
     comment: "",
-    albumID: "",
     albumComments: [],
     tracksRequested: false
   }),
@@ -218,6 +218,7 @@ export default {
         comment => comment.date == date
       );
       this.albumComments[commentIndex].edit = true;
+      //alert("got here");
       this.albumComments[commentIndex].editVersion = this.albumComments[
         commentIndex
       ].commentBody;
@@ -253,6 +254,7 @@ export default {
   },
   mounted() {
     this.fetchAlbumComments();
+    this.userName = this.loggedInUserName;
   }
 };
 </script>
